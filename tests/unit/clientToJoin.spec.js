@@ -13,4 +13,14 @@ describe('clientToJoin.vue', () => {
     const title = wrapper.find('h1');
     expect(title.text()).toMatch('Bienvenido!');
   });
+  it('redirect when button is clicked', (done) => {
+    const wrapper = mount(ClientToJoin, {
+      localVue,
+    });
+    wrapper.find('button').trigger('click');
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.find('h1').exists()).toBe(false);
+      done();
+    });
+  });
 });
