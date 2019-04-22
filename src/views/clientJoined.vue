@@ -69,23 +69,15 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.loadDataInterval();
   },
   beforeDestroy() {
     clearInterval(this.loadData);
   },
   methods: {
-    loadData() {
+    loadDataInterval() {
       setInterval(() => {
-        axios.get('mock')
-          .then((response) => {
-            this.queueData = response.data;
-            this.hasError = false;
-            this.checkExit();
-          })
-          .catch((error) => {
-            this.error = error;
-            this.hasError = true;
-          });
+        this.loadData();
       }, 10000);
     },
     exitRow() {
@@ -102,6 +94,18 @@ export default {
       if (this.queueData.done) {
         this.exitRow();
       }
+    },
+    loadData() {
+      axios.get('mock')
+        .then((response) => {
+          this.queueData = response.data;
+          this.hasError = false;
+          this.checkExit();
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
     },
   },
 };
