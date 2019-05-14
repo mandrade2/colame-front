@@ -1,0 +1,120 @@
+<template>
+  <div
+    class="main"
+  >
+    <div v-if="hasError">
+      <b-alert
+        variant="danger"
+        dismissible
+        show
+      >
+        {{ error }}
+      </b-alert>
+    </div>
+    <h1 class="title">
+      Bienvenido!
+    </h1>
+    <div>
+      <b-button
+        class="join"
+        variant="light"
+        @click="joinRow"
+      >
+        Unirse a una fila!
+      </b-button>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'ClientToJoin',
+  data() {
+    return {
+      error: '',
+      hasError: false,
+    };
+  },
+  methods: {
+    joinRow() {
+      axios.get('https://jsonplaceholder.typicode.com/users?id=1')
+        .then((response) => {
+          this.$emit('queue', response.data);
+          this.hasError = false;
+          this.$router.replace('/row');
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
+    },
+  },
+};
+
+
+</script>
+
+<style scoped>
+
+.title {
+  padding-top: 25vh;
+  font-size: 390%;
+}
+
+.join {
+  margin-top: 10vh;
+  width: 70%;
+  font-weight: bold;
+  color: #2e2e2e;
+}
+
+.main {
+  width: 100wh;
+  height: 90vh;
+  color: #fff;
+  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+   }
+   50% {
+     background-position: 100% 50%
+   }
+   100% {
+     background-position: 0% 50%
+   }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+</style>
