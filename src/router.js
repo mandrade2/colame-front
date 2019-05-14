@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import ClientToJoin from './views/clientToJoin.vue';
+import ClientJoined from './views/clientJoined.vue';
+import AssistanView from './views/assistantView.vue';
 
 Vue.use(Router);
 
@@ -9,7 +12,17 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: ClientToJoin,
+    },
+    {
+      path: '/row',
+      name: 'line',
+      component: ClientJoined,
+    },
+    {
+      path: '/assistant',
+      name: 'Assistant',
+      component: AssistanView,
     },
     {
       path: '/about',

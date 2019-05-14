@@ -11,34 +11,51 @@
         {{ error }}
       </b-alert>
     </div>
-    <div v-if=" queueData.yourNumber - queueData.current != 0">
+    <div
+      v-if=" queueData.yourNumber - queueData.current != 0"
+      class="waiting"
+    >
       <h3> Faltan: </h3>
       <h1> {{ queueData.yourNumber - queueData.current }} </h1>
     </div>
-    <div v-else>
+    <div
+      v-else
+      class="turn"
+    >
       <h1> Te Toca! </h1>
     </div>
     <h5> Tu número: </h5>
     <h4> {{ queueData.yourNumber }} </h4>
     <div v-if=" queueData.yourNumber - queueData.current > 0">
       <b-button
-        block
+        v-b-modal.sure
+        class="exit"
         variant="danger"
-        @click="exitRow"
       >
-        Salirse de una fila!
+        Salirse de la fila!
       </b-button>
     </div>
     <div v-else>
       <b-button
-        block
+        class="exit"
         variant="danger"
         disabled
         @click="exitRow"
       >
-        Salirse de una fila!
+        Salirse de la fila!
       </b-button>
     </div>
+    <b-modal
+      id="sure"
+      class="sure"
+      title="Seguro?"
+      centered
+      okVariant= 'danger'
+      okTitle= 'Salir!'
+      @ok="exitRow"
+    >
+      Seguro que quiere salirse de la fila?
+    </b-modal>
   </div>
 </template>
 
@@ -72,7 +89,7 @@ export default {
     this.loadDataInterval();
   },
   beforeDestroy() {
-    clearInterval(this.loadData);
+    clearInterval(this.loadDataInterval);
   },
   methods: {
     loadDataInterval() {
@@ -114,5 +131,31 @@ export default {
 </script>
 
 <style scoped>
+
+.waiting {
+  padding-top: 20vh;
+}
+
+.waiting h3,h1 {
+  font-size: 300%;
+}
+
+.turn {
+  padding-top: 20vh;
+}
+
+.turn h1 {
+  font-size: 500%;
+}
+
+.exit {
+  margin-top: 10vh;
+  width: 70%;
+  font-weight: bold;
+}
+
+.sure{
+  color: black;
+}
 
 </style>
