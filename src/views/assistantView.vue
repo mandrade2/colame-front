@@ -8,12 +8,14 @@
     <div v-if="status == 'arrived'">
       <AssistantAttending
         :currentNumber="currentNumber"
+        :clientId = "clientId"
         @status="updateStatus"
       />
     </div>
     <div v-if="status == 'waiting' && currentNumber">
       <AssistantWaiting
         :currentNumber="currentNumber"
+        :clientId = "clientId"
         @status="updateStatus"
       />
     </div>
@@ -41,21 +43,17 @@ export default {
     return {
       error: '',
       hasError: false,
-      status: 'arrived',
-      currentNumber: 2,
+      status: 'notStarted',
+      currentNumber: -1,
+      clientId: -1,
+      interval: 0,
     };
-  },
-  mounted() {
-    this.loadData();
-    this.loadDataInterval();
-  },
-  beforeDestroy() {
-    clearInterval(this.loadDataInterval);
   },
   methods: {
     updateStatus(value) {
       this.status = value.status;
       this.currentNumber = value.currentNumber;
+      this.clientId = value.clientId;
     },
   },
 };

@@ -34,6 +34,7 @@ export default {
     return {
       error: '',
       hasError: false,
+      interval: 0,
     };
   },
   mounted() {
@@ -41,19 +42,20 @@ export default {
     this.loadDataInterval();
   },
   beforeDestroy() {
-    clearInterval(this.loadDataInterval);
+    clearInterval(this.interval);
   },
   methods: {
     loadDataInterval() {
-      setInterval(() => {
+      this.interval = setInterval(() => {
         this.loadData();
       }, 10000);
     },
     loadData() {
-      axios.get('next')
+      axios.patch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', {})
         .then((response) => {
-          if (response.data.currentNumber) {
-            this.$emit('status', { status: 'waiting', currentNumber: response.data.currentNumber });
+          if (response.data._id) {
+            clearInterval(this.interval);
+            this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
           }
         })
         .catch((error) => {

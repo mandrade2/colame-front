@@ -40,9 +40,9 @@ export default {
   },
   methods: {
     start() {
-      axios.get('start')
-        .then((response) => {
-          this.$emit('status', { status: 'waiting', currentNumber: response.data.currentNumber });
+      axios.post('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/attendant')
+        .then(() => {
+          this.$emit('status', { status: 'waiting', currentNumber: null, clientId: null });
           this.hasError = false;
         })
         .catch((error) => {
@@ -52,15 +52,6 @@ export default {
     },
   },
 };
-
-<b-button
-  class="exit"
-  variant="danger"
-  @click="exitRow"
->
-  Salirse de la fila!
-</b-button>
-
 </script>
 
 <style scoped>

@@ -39,6 +39,12 @@ export default {
         return -1;
       },
     },
+    clientId: {
+      type: Number,
+      default() {
+        return -1;
+      },
+    },
   },
   data() {
     return {
@@ -48,9 +54,9 @@ export default {
   },
   methods: {
     next() {
-      axios.get('next')
+      axios.patch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', { clientId: this.clientId })
         .then((response) => {
-          this.$emit('status', { status: 'waiting', currentNumber: response.data.currentNumber });
+          this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
           this.hasError = false;
         })
         .catch((error) => {

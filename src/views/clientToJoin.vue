@@ -39,11 +39,12 @@ export default {
   },
   methods: {
     joinRow() {
-      axios.get('https://jsonplaceholder.typicode.com/users?id=1')
+      axios.post('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', {})
         .then((response) => {
           this.$emit('queue', response.data);
           this.hasError = false;
-          this.$router.replace('/row');
+          console.log('wut');
+          this.$router.push({ name: 'line', params: { data: response.data } });
         })
         .catch((error) => {
           this.error = error;

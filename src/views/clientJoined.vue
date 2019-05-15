@@ -12,11 +12,11 @@
       </b-alert>
     </div>
     <div
-      v-if=" queueData.yourNumber - queueData.current != 0"
+      v-if=" !data.line.attending.includes(data.client._id)"
       class="waiting"
     >
       <h3> Faltan: </h3>
-      <h1> {{ queueData.yourNumber - queueData.current }} </h1>
+      <h1> {{ position }} </h1>
     </div>
     <div
       v-else
@@ -25,8 +25,8 @@
       <h1> Te Toca! </h1>
     </div>
     <h5> Tu número: </h5>
-    <h4> {{ queueData.yourNumber }} </h4>
-    <div v-if=" queueData.yourNumber - queueData.current > 0">
+    <h4> {{ data.client.number }} </h4>
+    <div v-if=" !data.line.attending.includes(data.client._id)">
       <b-button
         v-b-modal.sure
         class="exit"
@@ -65,14 +65,30 @@ import axios from 'axios';
 export default {
   name: 'ClientJoined',
   props: {
-    queue: {
+    data: {
       type: Object,
       default() {
         return {
-          name: '__error__',
-          yourNumber: 10,
-          current: 1,
-          done: true,
+          line: {
+            name: '__error__',
+            companyId: -1,
+            _id: -1,
+            current: 1,
+            done: true,
+            clients: [],
+            avgTimeWaiting: 0,
+            attendants: [],
+            currentNumber: 0,
+            attending: [],
+            __v: 0,
+          },
+          client: {
+            _id: -1,
+            __v: 0,
+            number: -1,
+            lineId: -1,
+            position: -1,
+          },
         };
       },
     },
@@ -81,7 +97,9 @@ export default {
     return {
       error: '',
       hasError: false,
-      queueData: this.queue,
+      queueData: this.data,
+      position: 9999,
+      interval: 0,
     };
   },
   mounted() {
@@ -89,17 +107,18 @@ export default {
     this.loadDataInterval();
   },
   beforeDestroy() {
-    clearInterval(this.loadDataInterval);
+    clearInterval(this.interval);
   },
   methods: {
     loadDataInterval() {
-      setInterval(() => {
+      this.interval = setInterval(() => {
         this.loadData();
       }, 10000);
     },
     exitRow() {
-      axios.delete('mock')
+      axios.patch(`http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/${this.data.client._id}`, {})
         .then(() => {
+          clearInterval(this.interval);
           this.$router.replace('/');
         })
         .catch((error) => {
@@ -108,15 +127,20 @@ export default {
         });
     },
     checkExit() {
-      if (this.queueData.done) {
-        this.exitRow();
+      if (this.position < 0 && !this.data.line.attending.includes(this.data.client._id)) {
+        clearInterval(this.interval);
+        this.$router.replace('/');
       }
     },
+    getPosition() {
+      this.position = this.data.line.clients.indexOf(this.data.client._id);
+    },
     loadData() {
-      axios.get('mock')
+      axios.get('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/')
         .then((response) => {
-          this.queueData = response.data;
+          this.data.line = response.data;
           this.hasError = false;
+          this.getPosition();
           this.checkExit();
         })
         .catch((error) => {
