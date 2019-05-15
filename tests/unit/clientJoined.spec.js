@@ -47,9 +47,9 @@ describe('clientJoined.vue', () => {
   });
   it('redirect when button is clicked', async () => {
     mock
-      .onDelete('mock')
+      .onPatch(`http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/${this.data.client._id}`)
       .reply(200)
-      .onGet('/mock')
+      .onGet('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/')
       .reply(200, {
         name: 'fila',
         yourNumber: 10,
@@ -70,9 +70,9 @@ describe('clientJoined.vue', () => {
   });
   it('show how long to wait and current number', async () => {
     mock
-      .onDelete('mock')
+      .onPatch(`http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/${this.data.client._id}`)
       .reply(200)
-      .onGet('/mock')
+      .onGet('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/')
       .reply(200, {
         name: 'fila',
         yourNumber: 10,

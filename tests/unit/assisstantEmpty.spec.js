@@ -16,7 +16,7 @@ const $router = {
   replace,
 };
 
-describe('clientToJoin.vue', () => {
+describe('assistantEmpty.vue', () => {
   let wrapper;
 
   beforeEach(() => {
@@ -34,20 +34,21 @@ describe('clientToJoin.vue', () => {
 
   it('it mounted', () => {
     const title = wrapper.find('h1');
-    expect(title.text()).toMatch('Fila Vacía!!');
+    expect(title.text()).toMatch('Fila vacía!');
     expect(wrapper.find('.alert').exists()).toBe(false);
   });
   it('Update empty row', async () => {
     mock
-      .onGet('next')
-      .replyOnce(200, [{ currentNumber: null }])
-      .reply(200, [{ currentNumber: 24 }]);
-    expect(wrapper.find('h1').text()).toBe('Fila Vacía!');
+      .onPatch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', {})
+      .replyOnce(200, [{ number: null, _id: null }])
+      .onPatch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', {})
+      .reply(200, [{ number: 24, _id: 'abc123' }]);
+    expect(wrapper.find('h1').text()).toBe('Fila vacía!');
     jest.advanceTimersByTime(10000);
     await flushPromises();
-    expect(wrapper.find('h1').text()).toBe('Fila Vacía!');
+    expect(wrapper.find('h1').text()).toBe('Fila vacía!');
     jest.advanceTimersByTime(10000);
     await flushPromises();
-    expect(wrapper.emitted().status[1]).toMatchObject({ status: 'waiting', currentNumber: 24 });
+    expect(wrapper.emitted().status[1]).toMatchObject({ status: 'waiting', currentNumber: 24, ClientId: 'abc123' });
   });
 });

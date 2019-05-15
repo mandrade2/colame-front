@@ -16,7 +16,7 @@ const $router = {
   replace,
 };
 
-describe('clientToJoin.vue', () => {
+describe('assistantWaiting.vue', () => {
   let wrapper;
 
   beforeEach(() => {

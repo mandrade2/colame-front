@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     notArrived() {
-      axios.patch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/notArrived', { clientId: this.clientId })
+      axios.patch('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f/notArrived', { clientId: this.clientId })
         .then((response) => {
           this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
           this.currentNumber = response.data.number;
@@ -75,7 +75,7 @@ export default {
         });
     },
     arrived() {
-      axios.get('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/')
+      axios.get('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f')
         .then(() => {
           this.$emit('status', { status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId });
         })

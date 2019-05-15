@@ -38,7 +38,7 @@ describe('clientToJoin.vue', () => {
   });
   it('redirect when button is clicked', async () => {
     mock
-      .onGet('https://jsonplaceholder.typicode.com/users?id=1')
+      .onPost('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658')
       .reply(200, [{ name: 'fila', yourNumber: 10, current: 5 }]);
     wrapper.find('button').trigger('click');
     await flushPromises();
@@ -46,7 +46,7 @@ describe('clientToJoin.vue', () => {
   });
   it('get queue information when called', async () => {
     mock
-      .onGet('https://jsonplaceholder.typicode.com/users?id=1')
+      .onPost('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658')
       .reply(200, { name: 'fila', yourNumber: 10, current: 5 });
     wrapper.find('button').trigger('click');
     await flushPromises();
@@ -57,7 +57,7 @@ describe('clientToJoin.vue', () => {
   });
   it('show error and dont show queue information', async () => {
     mock
-      .onGet('https://jsonplaceholder.typicode.com/users?id=1')
+      .onPost('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658')
       .networkError();
     wrapper.find('button').trigger('click');
     await flushPromises();

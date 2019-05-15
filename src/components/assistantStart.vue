@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     start() {
-      axios.post('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/attendant')
+      axios.post('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f/attendant')
         .then(() => {
           this.$emit('status', { status: 'waiting', currentNumber: null, clientId: null });
           this.hasError = false;

@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     next() {
-      axios.patch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', { clientId: this.clientId })
+      axios.patch('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f', { clientId: this.clientId })
         .then((response) => {
           this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
           this.hasError = false;

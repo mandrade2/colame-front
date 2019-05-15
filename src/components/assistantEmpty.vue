@@ -51,7 +51,7 @@ export default {
       }, 10000);
     },
     loadData() {
-      axios.patch('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658', {})
+      axios.patch('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f', {})
         .then((response) => {
           if (response.data._id) {
             clearInterval(this.interval);

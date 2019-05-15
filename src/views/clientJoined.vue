@@ -116,7 +116,7 @@ export default {
       }, 10000);
     },
     exitRow() {
-      axios.patch(`http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/${this.data.client._id}`, {})
+      axios.patch(`https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f/${this.data.client._id}`, {})
         .then(() => {
           clearInterval(this.interval);
           this.$router.replace('/');
@@ -136,7 +136,7 @@ export default {
       this.position = this.data.line.clients.indexOf(this.data.client._id);
     },
     loadData() {
-      axios.get('http://127.0.0.1:3000/line/5cdb81baaeac5c281f1b6658/')
+      axios.get('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f')
         .then((response) => {
           this.data.line = response.data;
           this.hasError = false;
