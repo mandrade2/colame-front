@@ -14,6 +14,7 @@
     <h1 class="title">
       Bienvenido!
     </h1>
+    <qrcode-stream @decode="onDecode"></qrcode-stream>
     <div>
       <b-button
         class="join"
@@ -28,9 +29,13 @@
 
 <script>
 import axios from 'axios';
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
 
 export default {
   name: 'ClientToJoin',
+  components: {
+    QrcodeStream,
+  },
   data() {
     return {
       error: '',
@@ -44,6 +49,18 @@ export default {
           this.$emit('queue', response.data);
           this.hasError = false;
           console.log('wut');
+          this.$router.push({ name: 'line', params: { data: response.data } });
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
+    },
+    onDecode(decodedString) {
+      axios.post(decodedString, {})
+        .then((response) => {
+          this.$emit('queue', response.data);
+          this.hasError = false;
           this.$router.push({ name: 'line', params: { data: response.data } });
         })
         .catch((error) => {
