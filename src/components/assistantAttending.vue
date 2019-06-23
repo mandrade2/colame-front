@@ -45,6 +45,12 @@ export default {
         return -1;
       },
     },
+    attended: {
+      type: Date
+    },
+    client: {
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -54,10 +60,13 @@ export default {
   },
   methods: {
     next() {
-      axios.patch('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f', { clientId: this.clientId })
+      console.log({ clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended})
+      axios.patch('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62', { clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended})
         .then((response) => {
-          this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
+          this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, time: null, client: false });
           this.hasError = false;
+          this.client = false;
+          this.time = null
         })
         .catch((error) => {
           this.error = error;

@@ -56,6 +56,32 @@
     >
       Seguro que quiere salirse de la fila?
     </b-modal>
+    <div>
+    <div v-if=" !data.client.here">
+    <p>
+        No estoy aqui
+      </p>
+        <b-button
+          class="here"
+          variant="success"
+          @click="imhere"
+        >
+         Estoy
+        </b-button>
+      </div>
+      <div v-else>
+    <p>
+        Estoy aqui
+      </p>
+        <b-button
+          class="here"
+          variant="warning"
+          @click="imhere"
+        >
+         Salir
+        </b-button>
+      </div>
+      </div>
   </div>
 </template>
 
@@ -115,8 +141,19 @@ export default {
         this.loadData();
       }, 10000);
     },
+    imhere() {
+      axios.patch(`http://127.0.0.1:3000/client/${this.data.client._id}`)
+        .then(() => {
+          clearInterval(this.interval);
+          this.$router.replace('/');
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
+    },
     exitRow() {
-      axios.patch(`https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f/${this.data.client._id}`, {})
+      axios.patch(`http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62/${this.data.client._id}`, {})
         .then(() => {
           clearInterval(this.interval);
           this.$router.replace('/');
@@ -136,7 +173,7 @@ export default {
       this.position = this.data.line.clients.indexOf(this.data.client._id);
     },
     loadData() {
-      axios.get('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f')
+      axios.get('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62')
         .then((response) => {
           this.data.line = response.data;
           this.hasError = false;

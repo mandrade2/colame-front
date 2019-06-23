@@ -54,6 +54,12 @@ export default {
         return -1;
       },
     },
+    attended: {
+      type: Date
+    },
+    client: {
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -63,7 +69,7 @@ export default {
   },
   methods: {
     notArrived() {
-      axios.patch('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f/notArrived', { clientId: this.clientId })
+      axios.patch('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62/notArrived', { clientId: this.clientId })
         .then((response) => {
           this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
           this.currentNumber = response.data.number;
@@ -75,9 +81,11 @@ export default {
         });
     },
     arrived() {
-      axios.get('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f')
+      axios.get('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62')
         .then(() => {
-          this.$emit('status', { status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId });
+          this.attended = new Date().getTime();
+          this.$emit('status', { status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId, attended: this.attended, client: true});
+          this.client = true;
         })
         .catch((error) => {
           this.error = error;

@@ -9,6 +9,8 @@
       <AssistantAttending
         :currentNumber="currentNumber"
         :clientId = "clientId"
+        :client = "client"
+        :attended = "attended"
         @status="updateStatus"
       />
     </div>
@@ -16,6 +18,8 @@
       <AssistantWaiting
         :currentNumber="currentNumber"
         :clientId = "clientId"
+        :client = "client"
+        :attended = "attended"
         @status="updateStatus"
       />
     </div>
@@ -47,6 +51,8 @@ export default {
       currentNumber: -1,
       clientId: -1,
       interval: 0,
+      client: false,
+      attended: null,
     };
   },
   methods: {
@@ -54,6 +60,8 @@ export default {
       this.status = value.status;
       this.currentNumber = value.currentNumber;
       this.clientId = value.clientId;
+      this.attended = value.attended;
+      this.client = value.client;
     },
   },
 };

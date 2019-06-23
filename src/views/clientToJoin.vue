@@ -39,11 +39,10 @@ export default {
   },
   methods: {
     joinRow() {
-      axios.post('https://colame-back.herokuapp.com/line/5cdbd6bebfc6b9003103105f', {})
+      axios.post('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62', {})
         .then((response) => {
           this.$emit('queue', response.data);
           this.hasError = false;
-          console.log('wut');
           this.$router.push({ name: 'line', params: { data: response.data } });
         })
         .catch((error) => {
