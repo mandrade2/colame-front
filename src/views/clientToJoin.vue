@@ -11,17 +11,21 @@
         {{ error }}
       </b-alert>
     </div>
-    <h1 class="title">
-      Bienvenido!
-    </h1>
-    <qrcode-stream @decode="onDecode"></qrcode-stream>
-    <div>
+    <div class="d1">
+      <h1 class="title">
+        CÓLAME
+      </h1>
+    </div>
+    <div class="qr">
+      <qrcode-stream @decode="onDecode"></qrcode-stream>
+    </div>
+    <div class="d2">
       <b-button
         class="join"
         variant="light"
         @click="joinRow"
       >
-        Unirse a una fila!
+        Unirse a la fila!
       </b-button>
     </div>
   </div>
@@ -76,21 +80,29 @@ export default {
 
 <style scoped>
 
+.d1 {
+  height: 20vh;
+}
+
 .title {
-  padding-top: 25vh;
+  padding-top: 5%;
   font-size: 390%;
 }
 
 .join {
-  margin-top: 10vh;
-  width: 70%;
+  border-radius: 50%;
+  height: 35vh;
+  width: 35vh;
   font-weight: bold;
+  font-size: 150%;
   color: #2e2e2e;
+  border-width: 3vh;
+  border-color: orange;
 }
 
 .main {
   width: 100wh;
-  height: 90vh;
+  height: 100vh;
   color: #fff;
   background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
   background-size: 400% 400%;
