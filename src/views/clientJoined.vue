@@ -56,6 +56,32 @@
     >
       Seguro que quiere salirse de la fila?
     </b-modal>
+    <div>
+    <div v-if=" !data.client.here">
+    <p>
+        No estoy aqui
+      </p>
+        <b-button
+          class="here"
+          variant="success"
+          @click="imhere"
+        >
+         Estoy
+        </b-button>
+      </div>
+      <div v-else>
+    <p>
+        Estoy aqui
+      </p>
+        <b-button
+          class="here"
+          variant="warning"
+          @click="imhere"
+        >
+         Salir
+        </b-button>
+      </div>
+      </div>
   </div>
 </template>
 
@@ -88,6 +114,7 @@ export default {
             number: -1,
             lineId: -1,
             position: -1,
+            here: false,
           },
         };
       },
@@ -114,6 +141,16 @@ export default {
       this.interval = setInterval(() => {
         this.loadData();
       }, 10000);
+    },
+    imhere() {
+      axios.patch(`http://127.0.0.1:3000/client/${this.data.client._id}`)
+        .then(() => {
+          this.data.client.here = !this.data.client.here
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
     },
     exitRow() {
       axios.patch(`http://127.0.0.1:3000/line/${this.data.line._id}/${this.data.client._id}`, {})
