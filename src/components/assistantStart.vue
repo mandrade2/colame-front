@@ -19,9 +19,22 @@
         block
         class="begin"
         variant="light"
-        @click="start"
+        @click="begin("5d0e4e71a68a2c2d983cbb62")"
       >
         Partir!
+      </b-button>
+    </div>
+    <div
+      v-for="(line, index) in lines"
+      :key="line._id"
+    >
+      <b-button
+        block
+        class="begin"
+        variant="light"
+        @click="begin(line._id)"
+      >
+        {{ line.name }}
       </b-button>
     </div>
   </div>
@@ -36,18 +49,32 @@ export default {
     return {
       error: '',
       hasError: false,
+      lines: [],
     };
   },
+  mounted() {
+    this.getLines();
+  },
   methods: {
-    start() {
-      axios.post('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62/attendant')
+    begin(lineId) {
+      axios.post(`http://127.0.0.1:3000/line/${lineId}/attendant`)
         .then(() => {
-          this.$emit('status', { status: 'waiting', currentNumber: null, clientId: null, client: false, attended: null });
+          this.$emit('status', { status: 'waiting', currentNumber: null, clientId: null, client: false, attended: null, lineId: lineId });
           this.hasError = false;
         })
         .catch((error) => {
           this.error = error;
           this.hasError = true;
+        });
+    },
+    getLines() {
+      axios.get('http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/lines')
+        .then(async (lines) => {
+          this.lines = lines.data;
+        })
+        .catch((err) => {
+          this.hasError = true;
+          this.error = err;
         });
     },
   },

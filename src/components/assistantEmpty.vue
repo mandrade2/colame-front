@@ -29,6 +29,12 @@ export default {
         return -1;
       },
     },
+    lineId: {
+      type: String,
+      default() {
+        return '00';
+      },
+    },
   },
   data() {
     return {
@@ -55,7 +61,7 @@ export default {
         .then((response) => {
           if (response.data._id) {
             clearInterval(this.interval);
-            this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
+            this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, lineId: this.lineId });
           }
         })
         .catch((error) => {

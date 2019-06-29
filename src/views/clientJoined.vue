@@ -127,6 +127,8 @@ export default {
       queueData: this.data,
       position: 9999,
       interval: 0,
+      startDate: new Date(),
+      sentTime: false,
     };
   },
   mounted() {
@@ -166,18 +168,40 @@ export default {
     checkExit() {
       if (this.position < 0 && !this.data.line.attending.includes(this.data.client._id)) {
         clearInterval(this.interval);
+        if (!this.sentTime){
+          this.sendTime();
+        }
         this.$router.replace('/');
       }
     },
     getPosition() {
       this.position = this.data.line.clients.indexOf(this.data.client._id);
     },
+    sendTime() {
+      let newDate = new Date();
+      let seconds = (newDate.getTime() - startDate.getTime())/1000
+      let response = {date: new Date(), seconds: seconds, clientId: this.data.client._id, lineId: this.data.line._id, attendants: this.data.line.attendants}
+      axios.post('http://127.0.0.1:3000/waittime', response)
+        .then((response) => {
+          this.sentTime = true;
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
+    },
+    checkTime() {
+      if (!this.sentTime && this.data.line.attending.includes(this.data.client._id)){
+        this.sendTime();
+      }
+    }
     loadData() {
       axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}`)
         .then((response) => {
           this.data.line = response.data;
           this.hasError = false;
           this.getPosition();
+          this.checkTime();
           this.checkExit();
         })
         .catch((error) => {

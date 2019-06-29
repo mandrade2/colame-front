@@ -11,6 +11,7 @@
         :clientId = "clientId"
         :client = "client"
         :attended = "attended"
+        :lineId = "lineId"
         @status="updateStatus"
       />
     </div>
@@ -20,6 +21,7 @@
         :clientId = "clientId"
         :client = "client"
         :attended = "attended"
+        :lineId = "lineId"
         @status="updateStatus"
       />
     </div>
@@ -53,6 +55,7 @@ export default {
       interval: 0,
       client: false,
       attended: null,
+      lineId: null,
     };
   },
   methods: {
@@ -62,6 +65,7 @@ export default {
       this.clientId = value.clientId;
       this.attended = value.attended;
       this.client = value.client;
+      this.lineId = value.lineId;
     },
   },
 };

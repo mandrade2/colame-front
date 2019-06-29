@@ -40,9 +40,9 @@ export default {
       },
     },
     clientId: {
-      type: Number,
+      type: String,
       default() {
-        return -1;
+        return "01";
       },
     },
     attended: {
@@ -50,20 +50,33 @@ export default {
     },
     client: {
       type: Boolean
-    }
+    },
+    attendantId: {
+      type: String,
+      default() {
+        return "01";
+      },
+    },
+    lineId: {
+      type: String,
+      default() {
+        return "01";
+      },
+    },
+
   },
   data() {
     return {
       error: '',
       hasError: false,
+      startDate: new Date(),
     };
   },
   methods: {
     next() {
-      console.log({ clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended})
-      axios.patch('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62', { clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended})
+      axios.patch(`http://127.0.0.1:3000/line/${this.lineId}`, { clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended })
         .then((response) => {
-          this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, time: null, client: false });
+          this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, time: null, client: false, lineId: this.lineId });
           this.hasError = false;
           this.client = false;
           this.time = null
@@ -73,6 +86,19 @@ export default {
           this.hasError = true;
         });
     },
+    sendTime() {
+      const newDate = new Date();
+      const seconds = (newDate.getTime() - startDate.getTime()) / 1000;
+      const response = { date: new Date(), seconds: seconds, clientId: this.data.client._id, lineId: this.lineId, attendantId: this.attendantId};
+      axios.post('http://127.0.0.1:3000/atttime', response)
+        .then((response) => {
+          this.sentTime = true;
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
+    }
   },
 };
 

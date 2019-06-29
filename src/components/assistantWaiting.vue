@@ -49,9 +49,15 @@ export default {
       },
     },
     clientId: {
-      type: Number,
+      type: String,
       default() {
-        return -1;
+        return "00";
+      },
+    },
+    lineId: {
+      type: String,
+      default() {
+        return "00";
       },
     },
     attended: {
@@ -69,7 +75,7 @@ export default {
   },
   methods: {
     notArrived() {
-      axios.patch('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62/notArrived', { clientId: this.clientId })
+      axios.patch(`http://127.0.0.1:3000/line/${this.lineId}/notArrived`, { clientId: this.clientId })
         .then((response) => {
           this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id });
           this.currentNumber = response.data.number;
@@ -81,10 +87,10 @@ export default {
         });
     },
     arrived() {
-      axios.get('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62')
+      axios.get(`http://127.0.0.1:3000/line/${this.lineId}`)
         .then(() => {
           this.attended = new Date().getTime();
-          this.$emit('status', { status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId, attended: this.attended, client: true});
+          this.$emit('status', { status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId, attended: this.attended, client: true, lineId: this.lineId});
           this.client = true;
         })
         .catch((error) => {
