@@ -194,9 +194,9 @@ export default {
       if (!this.sentTime && this.data.line.attending.includes(this.data.client._id)){
         this.sendTime();
       }
-    }
+    },
     loadData() {
-      axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}`)
+      axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}/position/${this.data.client._id}/${this.position}`)
         .then((response) => {
           this.data.line = response.data;
           this.hasError = false;
