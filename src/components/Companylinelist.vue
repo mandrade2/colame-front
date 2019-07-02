@@ -20,51 +20,7 @@
       v-for="(line, index) in lines"
       :key="line._id"
     >
-      <b-card
-        v-if="selected != line._id"
-        bg-variant="dark"
-        text-variant="white"
-        :title="line.name"
-      >
-        <div>
-          <b-card-img :src="qrcodes[index]" />
-        </div>
-        <div>
-          <b-button
-            :href="'data:image/png;'+qrcodes[index]"
-            :download="line.name+'.png'"
-          >
-            Descargar Código
-          </b-button>
-        </div>
-        <b-button
-          variant="danger"
-          @click="deleteLine(line._id)"
-        >
-          Delete
-        </b-button>
-        <b-button
-          variant="warning"
-          @click="select(line._id)"
-        >
-          Editar
-        </b-button>
-      </b-card>
-      <b-card
-        v-else
-        bg-variant="dark"
-        text-variant="white"
-        :title="'Editando '+line.name"
-      >
-        <div class="center">
-          <LineCreator
-            :line="line"
-            :isNew="false"
-            :companyId="'5cd6f9ce14f8aa4a7a2928ba'"
-            @done="getLines()"
-          />
-        </div>
-      </b-card>
+      <LineListElement :line=line @done="getLines()"/>
     </div>
   </div>
 </template>
@@ -73,11 +29,13 @@
 import axios from 'axios';
 import QRCode from 'qrcode';
 import LineCreator from '@/components/lineCreator.vue';
+import LineListElement from '@/components/Linelistelement.vue';
 
 export default {
   name: 'CompanyLinesList',
   components: {
     LineCreator,
+    LineListElement,
   },
   data() {
     return {

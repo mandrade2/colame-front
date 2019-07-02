@@ -21,6 +21,14 @@
       </div>
       <div class="main">
         <b-button
+          v-if="!isNew"
+          block
+          variant="danger"
+          @click="cancel"
+        >
+          Cancelar
+        </b-button>
+        <b-button
           type="submit"
           variant="primary"
         >
@@ -60,6 +68,9 @@ export default {
     },
   },
   methods: {
+    cancel() {
+      this.$emit('cancel');
+    },
     onSubmit(evt) {
       evt.preventDefault();
       if (this.isNew) {
@@ -98,7 +109,7 @@ export default {
 }
 
 .title{
-  
+
 }
 
 </style>

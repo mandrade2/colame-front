@@ -194,7 +194,7 @@ export default {
       if (!this.sentTime && this.data.line.attending.includes(this.data.client._id)){
         this.sendTime();
       }
-    }
+    },
     loadData() {
       axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}`)
         .then((response) => {

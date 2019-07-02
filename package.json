@@ -15,6 +15,7 @@
     "axios-mock-adapter": "^1.16.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.18",
+    "canvasjs": "github:vasilrimar/canvasjs",
     "core-js": "^2.6.5",
     "flush-promises": "^1.0.2",
     "qrcode": "^1.3.3",
