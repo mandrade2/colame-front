@@ -5,6 +5,7 @@ import ClientToJoin from './views/clientToJoin.vue';
 import ClientJoined from './views/clientJoined.vue';
 import AssistanView from './views/assistantView.vue';
 import CompanyView from './views/CompanyView.vue';
+import CompanyForm from './views/CompanyForm.vue';
 
 Vue.use(Router);
 
@@ -19,7 +20,6 @@ export default new Router({
       path: '/row',
       name: 'line',
       component: ClientJoined,
-      props: true,
     },
     {
       path: '/assistant',
@@ -30,6 +30,11 @@ export default new Router({
       path: '/company',
       name: 'Company',
       component: CompanyView,
+    },
+    {
+      path: '/company_form',
+      name: 'CompanyForm',
+      component: CompanyForm,
     },
   ],
 });
