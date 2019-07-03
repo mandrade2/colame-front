@@ -30,7 +30,7 @@ export default {
     login(username, password) {
       console.log(username, password);
       axios
-        .post(`http://127.0.0.1:3000/attendant`)
+        .post(`http://127.0.0.1:3000/attendant`, { username, password })
         .then(() => {
           this.$emit("status", {
             status: "notStarted",
