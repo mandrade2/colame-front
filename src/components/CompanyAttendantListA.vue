@@ -11,7 +11,7 @@
         text-variant="dark"
       >
         <AttendantCreator
-          :companyId="'5cd6f9ce14f8aa4a7a2928ba'"
+          :company-id="'5cd6f9ce14f8aa4a7a2928ba'"
           @done="getAttendants()"
         />
       </b-card>
@@ -48,8 +48,8 @@
         <div class="center">
           <AttendantCreator
             :attendant="attendant"
-            :isNew="false"
-            :companyId="'5cd6f9ce14f8aa4a7a2928ba'"
+            :is-new="false"
+            :company-id="'5cd6f9ce14f8aa4a7a2928ba'"
             @done="getAttendants()"
           />
         </div>

@@ -9,7 +9,14 @@
       :title="attendant.name"
     >
       <div>
-        <b-table striped hover :items="items" :fields="fields" :dark="true" :responsive="true" />
+        <b-table
+          striped
+          hover
+          :items="items"
+          :fields="fields"
+          :dark="true"
+          :responsive="true"
+        />
       </div>
       <b-button
         variant="danger"
@@ -23,16 +30,53 @@
       >
         Editar
       </b-button>
-      <b-button v-b-toggle="attendant._id+'graphs'" variant="primary" block>Datos por dias</b-button>
-      <b-collapse :id="attendant._id+'graphs'" class="mt-2">
-        <div :id="attendant._id +'client'" style="height: 360px; width: 100%;"/>
-        <div :id="attendant._id +'avgTime'" style="height: 360px; width: 100%;"/>
-        <div :id="attendant._id +'maxtime'" style="height: 360px; width: 100%;"/>
-        <div :id="attendant._id +'mintime'" style="height: 360px; width: 100%;"/>
+      <b-button
+        v-b-toggle="attendant._id+'graphs'"
+        variant="primary"
+        block
+      >
+        Datos por dias
+      </b-button>
+      <b-collapse
+        :id="attendant._id+'graphs'"
+        class="mt-2"
+      >
+        <div
+          :id="attendant._id +'client'"
+          style="height: 360px; width: 100%;"
+        />
+        <div
+          :id="attendant._id +'avgTime'"
+          style="height: 360px; width: 100%;"
+        />
+        <div
+          :id="attendant._id +'maxtime'"
+          style="height: 360px; width: 100%;"
+        />
+        <div
+          :id="attendant._id +'mintime'"
+          style="height: 360px; width: 100%;"
+        />
       </b-collapse>
-      <b-button v-b-toggle="attendant._id+'line'" variant="primary" block>Datos por Lineas</b-button>
-      <b-collapse :id="attendant._id+'line'" class="mt-2">
-        <b-table striped hover :items="itemsLine" :fields="fields" :dark="true" :responsive="true" />
+      <b-button
+        v-b-toggle="attendant._id+'line'"
+        variant="primary"
+        block
+      >
+        Datos por Lineas
+      </b-button>
+      <b-collapse
+        :id="attendant._id+'line'"
+        class="mt-2"
+      >
+        <b-table
+          striped
+          hover
+          :items="itemsLine"
+          :fields="fields"
+          :dark="true"
+          :responsive="true"
+        />
       </b-collapse>
     </b-card>
     <b-card
@@ -44,8 +88,8 @@
       <div class="center">
         <AttendantCreator
           :attendant="attendant"
-          :isNew="false"
-          :companyId="'5cd6f9ce14f8aa4a7a2928ba'"
+          :is-new="false"
+          :company-id="'5cd6f9ce14f8aa4a7a2928ba'"
           @cancel="select()"
           @done="done()"
         />
@@ -85,7 +129,7 @@ export default {
       chartData: {
         animationEnabled: true,
         toolTip: {
-          shared: true
+          shared: true,
         },
         title: {
           text: '',
@@ -165,7 +209,7 @@ export default {
             tiempo_máximo: this.attInfo.maxtime,
             tiempo_mínimo: this.attInfo.mintime,
           });
-          for (let i in this.attInfo.dataPerLine){
+          for (const i in this.attInfo.dataPerLine) {
             this.itemsLine.push({
               type: i,
               clientes: this.attInfo.dataPerLine[i].clients,
@@ -178,11 +222,11 @@ export default {
           const keys = ['clients', 'avgTime', 'maxtime', 'mintime'];
           for (let i = 0; i < this.charts.length; i++) {
             this.charts[i].title.text = keys[i];
-            let dataPoints = [];
-            for (let x in this.attInfo.dataPerDate){
-              dataPoints.push({label: x, y: this.attInfo.dataPerDate[x][keys[i]]})
+            const dataPoints = [];
+            for (const x in this.attInfo.dataPerDate) {
+              dataPoints.push({ label: x, y: this.attInfo.dataPerDate[x][keys[i]] });
             }
-            this.charts[i].data.push({name:'Atendidos', type: 'column', dataPoints });
+            this.charts[i].data.push({ name: 'Atendidos', type: 'column', dataPoints });
           }
         })
         .catch((err) => {

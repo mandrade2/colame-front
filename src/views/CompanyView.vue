@@ -10,10 +10,16 @@
         active-nav-item-class="text-danger"
         nav-class="bg-light font-weight-bold text-danger"
       >
-        <b-tab title="Colame" disabled>
+        <b-tab
+          title="Colame"
+          disabled
+        >
           <p>I'm a disabled tab!</p>
         </b-tab>
-        <b-tab title="Lineas" active>
+        <b-tab
+          title="Lineas"
+          active
+        >
           <CompanyLinesList />
         </b-tab>
         <b-tab title="Atendedores">
@@ -25,24 +31,24 @@
 </template>
 
 <script>
-import CompanyAttendantList from "@/components/CompanyAttendantList.vue";
-import CompanyLinesList from "@/components/Companylinelist.vue";
-import CompanyLogin from "@/components/CompanyLogin.vue";
+import CompanyAttendantList from '@/components/CompanyAttendantList.vue';
+import CompanyLinesList from '@/components/Companylinelist.vue';
+import CompanyLogin from '@/components/CompanyLogin.vue';
 
 export default {
-  name: "CompanyView",
+  name: 'CompanyView',
   components: {
     CompanyAttendantList,
     CompanyLinesList,
-    CompanyLogin
+    CompanyLogin,
   },
   data() {
     return {
-      error: "",
+      error: '',
       hasError: false,
-      status: "notLoggedIn"
+      status: 'notLoggedIn',
     };
-  }
+  },
 };
 </script>
 

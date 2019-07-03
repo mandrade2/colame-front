@@ -1,28 +1,53 @@
 <template>
   <div class="main">
     <div v-if="hasError">
-      <b-alert variant="danger" dismissible show>{{ error }}</b-alert>
+      <b-alert
+        variant="danger"
+        dismissible
+        show
+      >
+        {{ error }}
+      </b-alert>
     </div>
-    <h1 class="title">Ingresa a una línea par atender</h1>
+    <h1 class="title">
+      Ingresa a una línea par atender
+    </h1>
     <div>
-      <b-button block class="begin" variant="light" @click="begin()">Comenzar!</b-button>
+      <b-button
+        block
+        class="begin"
+        variant="light"
+        @click="begin()"
+      >
+        Comenzar!
+      </b-button>
     </div>
-    <div v-for="(line) in lines" :key="line._id">
-      <b-button block class="begin" variant="light" @click="begin(line._id)">{{ line.name }}</b-button>
+    <div
+      v-for="(line) in lines"
+      :key="line._id"
+    >
+      <b-button
+        block
+        class="begin"
+        variant="light"
+        @click="begin(line._id)"
+      >
+        {{ line.name }}
+      </b-button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "AssistantStart",
+  name: 'AssistantStart',
   data() {
     return {
-      error: "",
+      error: '',
       hasError: false,
-      lines: []
+      lines: [],
     };
   },
   mounted() {
@@ -33,33 +58,33 @@ export default {
       axios
         .post(`http://127.0.0.1:3000/line/${lineId}/attendant`)
         .then(() => {
-          this.$emit("status", {
-            status: "waiting",
+          this.$emit('status', {
+            status: 'waiting',
             currentNumber: null,
             clientId: null,
             client: false,
             attended: null,
-            lineId: lineId
+            lineId,
           });
           this.hasError = false;
         })
-        .catch(error => {
+        .catch((error) => {
           this.error = error;
           this.hasError = true;
         });
     },
     getLines() {
       axios
-        .get("http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/lines") // TODO: desharcodear
-        .then(async lines => {
+        .get('http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/lines') // TODO: desharcodear
+        .then(async (lines) => {
           this.lines = lines.data;
         })
-        .catch(err => {
+        .catch((err) => {
           this.hasError = true;
           this.error = err;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

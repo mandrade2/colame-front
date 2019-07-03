@@ -42,25 +42,25 @@ export default {
     clientId: {
       type: String,
       default() {
-        return "01";
+        return '01';
       },
     },
     attended: {
-      type: Date
+      type: Date,
     },
     client: {
-      type: Boolean
+      type: Boolean,
     },
     attendantId: {
       type: String,
       default() {
-        return "01";
+        return '01';
       },
     },
     lineId: {
       type: String,
       default() {
-        return "01";
+        return '01';
       },
     },
 
@@ -76,10 +76,12 @@ export default {
     next() {
       axios.patch(`http://127.0.0.1:3000/line/${this.lineId}`, { clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended })
         .then((response) => {
-          this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, time: null, client: false, lineId: this.lineId });
+          this.$emit('status', {
+            status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, time: null, client: false, lineId: this.lineId,
+          });
           this.hasError = false;
           this.client = false;
-          this.time = null
+          this.time = null;
         })
         .catch((error) => {
           this.error = error;
@@ -89,7 +91,9 @@ export default {
     sendTime() {
       const newDate = new Date();
       const seconds = (newDate.getTime() - startDate.getTime()) / 1000;
-      const response = { date: new Date(), seconds: seconds, clientId: this.data.client._id, lineId: this.lineId, attendantId: this.attendantId};
+      const response = {
+        date: new Date(), seconds, clientId: this.data.client._id, lineId: this.lineId, attendantId: this.attendantId,
+      };
       axios.post('http://127.0.0.1:3000/atttime', response)
         .then((response) => {
           this.sentTime = true;
@@ -98,7 +102,7 @@ export default {
           this.error = error;
           this.hasError = true;
         });
-    }
+    },
   },
 };
 

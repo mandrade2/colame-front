@@ -11,7 +11,7 @@
         text-variant="dark"
       >
         <AttendantCreator
-          :companyId="'5cd6f9ce14f8aa4a7a2928ba'"
+          :company-id="'5cd6f9ce14f8aa4a7a2928ba'"
           @done="getAttendants()"
         />
       </b-card>
@@ -20,7 +20,10 @@
       v-for="attendant in attendants"
       :key="attendant._id"
     >
-      <AttendantListElement :attendant=attendant @done="getAttendants()"/>
+      <AttendantListElement
+        :attendant="attendant"
+        @done="getAttendants()"
+      />
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
     </div>
     <h1 class="title">Bienvenido!</h1>
     <b-form-input v-model="username" />
-    <b-form-input type="password" v-model="password" />
+    <b-form-input v-model="password" type="password" />
     <div>
       <b-button block class="begin" variant="light" @click="login(username,password)">Ingresar</b-button>
     </div>
@@ -30,8 +30,9 @@ export default {
     login(username, password) {
       console.log(username, password);
       axios
-        .post(`http://127.0.0.1:3000/company`, { username, passowrd })
-        .then(() => {
+        .post("http://127.0.0.1:3000/company", { username, passowrd })
+        .then(response => {
+          localStorage.setItem("JWT-company", response.body.jwt);
           this.$emit("status", {
             status: "AlreadyLogged"
           });

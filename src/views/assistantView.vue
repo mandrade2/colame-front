@@ -8,21 +8,21 @@
     </div>
     <div v-if="status == 'arrived'">
       <AssistantAttending
-        :currentNumber="currentNumber"
-        :clientId="clientId"
+        :current-number="currentNumber"
+        :client-id="clientId"
         :client="client"
         :attended="attended"
-        :lineId="lineId"
+        :line-id="lineId"
         @status="updateStatus"
       />
     </div>
     <div v-if="status == 'waiting' && currentNumber">
       <AssistantWaiting
-        :currentNumber="currentNumber"
-        :clientId="clientId"
+        :current-number="currentNumber"
+        :client-id="clientId"
         :client="client"
         :attended="attended"
-        :lineId="lineId"
+        :line-id="lineId"
         @status="updateStatus"
       />
     </div>
@@ -33,32 +33,32 @@
 </template>
 
 <script>
-import AssistantEmpty from "@/components/assistantEmpty.vue";
-import AssistantAttending from "@/components/assistantAttending.vue";
-import AssistantStart from "@/components/assistantStart.vue";
-import AssistantLogin from "@/components/assistantLogin.vue";
-import AssistantWaiting from "@/components/assistantWaiting.vue";
+import AssistantEmpty from '@/components/assistantEmpty.vue';
+import AssistantAttending from '@/components/assistantAttending.vue';
+import AssistantStart from '@/components/assistantStart.vue';
+import AssistantLogin from '@/components/assistantLogin.vue';
+import AssistantWaiting from '@/components/assistantWaiting.vue';
 
 export default {
-  name: "AssistantView",
+  name: 'AssistantView',
   components: {
     AssistantEmpty,
     AssistantAttending,
     AssistantStart,
     AssistantLogin,
-    AssistantWaiting
+    AssistantWaiting,
   },
   data() {
     return {
-      error: "",
+      error: '',
       hasError: false,
-      status: "notLoggedIn",
+      status: 'notLoggedIn',
       currentNumber: -1,
       clientId: -1,
       interval: 0,
       client: false,
       attended: null,
-      lineId: null
+      lineId: null,
     };
   },
   methods: {
@@ -69,8 +69,8 @@ export default {
       this.attended = value.attended;
       this.client = value.client;
       this.lineId = value.lineId;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -47,7 +47,7 @@
         <div class="center">
           <CompanyCreator
             :company="company"
-            :isNew="false"
+            :is-new="false"
             @done="getCompanies()"
           />
         </div>

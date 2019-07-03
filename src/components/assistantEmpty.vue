@@ -61,7 +61,9 @@ export default {
         .then((response) => {
           if (response.data._id) {
             clearInterval(this.interval);
-            this.$emit('status', { status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, lineId: this.lineId });
+            this.$emit('status', {
+              status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, lineId: this.lineId,
+            });
           }
         })
         .catch((error) => {

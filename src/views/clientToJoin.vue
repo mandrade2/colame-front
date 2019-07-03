@@ -17,7 +17,7 @@
       </h1>
     </div>
     <div class="qr">
-      <qrcode-stream @decode="onDecode"></qrcode-stream>
+      <qrcode-stream @decode="onDecode" />
     </div>
     <div class="d2">
       <b-button
