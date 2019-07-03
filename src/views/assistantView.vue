@@ -4,30 +4,32 @@
       <AssistantLogin @status="updateStatus" />
     </div>
     <div v-if="status == 'notStarted'">
-      <AssistantStart @status="updateStatus" />
+      <AssistantStart @status="updateStatus" :attendant="attendant" />
     </div>
     <div v-if="status == 'arrived'">
       <AssistantAttending
         :current-number="currentNumber"
-        :client-id="clientId"
+        :clientId="clientId"
         :client="client"
         :attended="attended"
-        :line-id="lineId"
+        :lineId="lineId"
+        :attendant="attendant"
         @status="updateStatus"
       />
     </div>
     <div v-if="status == 'waiting' && currentNumber">
       <AssistantWaiting
         :current-number="currentNumber"
-        :client-id="clientId"
+        :clientId="clientId"
         :client="client"
         :attended="attended"
-        :line-id="lineId"
+        :lineId="lineId"
+        :attendant="attendant"
         @status="updateStatus"
       />
     </div>
     <div v-if="status == 'waiting' && !currentNumber">
-      <AssistantEmpty @status="updateStatus" />
+      <AssistantEmpty @status="updateStatus" :attendant="attendant" :lineId="lineId"/>
     </div>
   </div>
 </template>
@@ -59,7 +61,15 @@ export default {
       client: false,
       attended: null,
       lineId: null,
+      attendant: {},
     };
+  },
+  mounted() {
+    if (localStorage.attendant) {
+      this.attendant = JSON.parse(localStorage.attendant);
+    } else {
+      this.status = 'notLoggedIn';
+    }
   },
   methods: {
     updateStatus(value) {

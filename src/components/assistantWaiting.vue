@@ -42,6 +42,12 @@ import axios from 'axios';
 export default {
   name: 'AssistantWaiting',
   props: {
+    attendant: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
     currentNumber: {
       type: Number,
       default() {

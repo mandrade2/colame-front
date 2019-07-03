@@ -20,10 +20,10 @@
           title="Lineas"
           active
         >
-          <CompanyLinesList />
+          <CompanyLinesList :company="company" />
         </b-tab>
         <b-tab title="Atendedores">
-          <CompanyAttendantList />
+          <CompanyAttendantList :company="company" />
         </b-tab>
       </b-tabs>
     </div>
@@ -47,9 +47,23 @@ export default {
       error: '',
       hasError: false,
       status: 'notLoggedIn',
+      company: {},
     };
   },
+  mounted() {
+    if (localStorage.company) {
+      this.company = JSON.parse(localStorage.company);
+    } else {
+      this.status = 'notLoggedIn';
+    }
+  },
+  methods: {
+    updateStatus() {
+      this.status = 'loggedIn';
+    },
+  },
 };
+
 </script>
 
 <style scoped>

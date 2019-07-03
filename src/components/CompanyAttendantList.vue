@@ -11,7 +11,7 @@
         text-variant="dark"
       >
         <AttendantCreator
-          :company-id="'5cd6f9ce14f8aa4a7a2928ba'"
+          :company-id="company._id"
           @done="getAttendants()"
         />
       </b-card>
@@ -39,6 +39,14 @@ export default {
     AttendantCreator,
     AttendantListElement,
   },
+  props: {
+    company: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       error: '',
@@ -52,7 +60,7 @@ export default {
   },
   methods: {
     getAttendants() {
-      axios.get('http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/attendants')
+      axios.get(`http://127.0.0.1:3000/company/${this.company._id}/attendants`)
         .then((attendants) => {
           this.attendants = attendants.data;
           this.selected = '';

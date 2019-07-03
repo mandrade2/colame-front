@@ -33,6 +33,12 @@ import axios from 'axios';
 export default {
   name: 'AssistantAttending',
   props: {
+    attendant: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
     currentNumber: {
       type: Number,
       default() {
@@ -50,12 +56,6 @@ export default {
     },
     client: {
       type: Boolean,
-    },
-    attendantId: {
-      type: String,
-      default() {
-        return '01';
-      },
     },
     lineId: {
       type: String,
@@ -92,7 +92,7 @@ export default {
       const newDate = new Date();
       const seconds = (newDate.getTime() - startDate.getTime()) / 1000;
       const response = {
-        date: new Date(), seconds, clientId: this.data.client._id, lineId: this.lineId, attendantId: this.attendantId,
+        date: new Date(), seconds, clientId: this.data.client._id, lineId: this.lineId, attendantId: this.attendant._id,
       };
       axios.post('http://127.0.0.1:3000/atttime', response)
         .then((response) => {

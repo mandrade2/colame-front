@@ -30,17 +30,17 @@ export default {
     login(username, password) {
       console.log(username, password);
       axios
-        .post("http://127.0.0.1:3000/attendant", { username, password })
+        .post("http://127.0.0.1:3000/attendant/login", { username, password })
         .then(response => {
-          localStorage.setItem("JWT-assistant", response.body.jwt);
-
+          localStorage.setItem("JWT-assistant", response.data.data.jwt);
+          localStorage.setItem("attendant", JSON.stringify(response.data.data.user));
           this.$emit("status", {
             status: "notStarted",
             currentNumber: null,
             clientId: null,
             client: false,
             attended: null,
-            lineId
+            lineId: null,
           });
           this.hasError = false;
         })

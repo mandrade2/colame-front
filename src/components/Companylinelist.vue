@@ -4,7 +4,7 @@
 
     <div class="center">
       <b-card title="Crear Fila" bg-variant="light" text-variant="dark">
-        <LineCreator :company-id="'5cd6f9ce14f8aa4a7a2928ba'" @done="getLines()" />
+        <LineCreator :company-id="company._id" @done="getLines()" />
       </b-card>
     </div>
     <div v-for="(line, index) in lines" :key="line._id">
@@ -25,6 +25,14 @@ export default {
     LineCreator,
     LineListElement
   },
+  props: {
+    company: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       error: "",
@@ -35,12 +43,14 @@ export default {
     };
   },
   mounted() {
+    console.log("hola");
+    console.log(this.company);
     this.getLines();
   },
   methods: {
     getLines() {
       axios
-        .get("http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/lines")
+        .get(`http://127.0.0.1:3000/company/${this.company._id}/lines`)
         .then(async lines => {
           this.lines = lines.data;
           this.selected = "";

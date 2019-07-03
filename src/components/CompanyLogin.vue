@@ -30,9 +30,10 @@ export default {
     login(username, password) {
       console.log(username, password);
       axios
-        .post("http://127.0.0.1:3000/company", { username, passowrd })
+        .post("http://127.0.0.1:3000/company/login", { username, password })
         .then(response => {
-          localStorage.setItem("JWT-company", response.body.jwt);
+          localStorage.setItem("JWT-company", response.data.data.jwt);
+          localStorage.setItem("company", JSON.stringify(response.data.data.user));
           this.$emit("status", {
             status: "AlreadyLogged"
           });

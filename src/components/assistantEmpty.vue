@@ -23,10 +23,10 @@ import axios from 'axios';
 export default {
   name: 'AssistantEmpty',
   props: {
-    currentNumber: {
-      type: Number,
+    attendant: {
+      type: Object,
       default() {
-        return -1;
+        return {};
       },
     },
     lineId: {
@@ -57,7 +57,8 @@ export default {
       }, 10000);
     },
     loadData() {
-      axios.patch('http://127.0.0.1:3000/line/5d0e4e71a68a2c2d983cbb62', {})
+      console.log(this.lineId);
+      axios.patch(`http://127.0.0.1:3000/line/${this.lineId}`, {})
         .then((response) => {
           if (response.data._id) {
             clearInterval(this.interval);

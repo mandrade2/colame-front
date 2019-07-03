@@ -13,14 +13,6 @@
       Ingresa a una línea par atender
     </h1>
     <div>
-      <b-button
-        block
-        class="begin"
-        variant="light"
-        @click="begin()"
-      >
-        Comenzar!
-      </b-button>
     </div>
     <div
       v-for="(line) in lines"
@@ -43,6 +35,14 @@ import axios from 'axios';
 
 export default {
   name: 'AssistantStart',
+  props: {
+    attendant: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       error: '',
@@ -75,7 +75,7 @@ export default {
     },
     getLines() {
       axios
-        .get('http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/lines') // TODO: desharcodear
+        .get(`http://127.0.0.1:3000/company/${this.attendant.companyId}/lines`) // TODO: desharcodear
         .then(async (lines) => {
           this.lines = lines.data;
         })
