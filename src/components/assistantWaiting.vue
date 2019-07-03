@@ -42,6 +42,12 @@ import axios from 'axios';
 export default {
   name: 'AssistantWaiting',
   props: {
+    attendant: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
     currentNumber: {
       type: Number,
       default() {
@@ -51,21 +57,21 @@ export default {
     clientId: {
       type: String,
       default() {
-        return "00";
+        return '00';
       },
     },
     lineId: {
       type: String,
       default() {
-        return "00";
+        return '00';
       },
     },
     attended: {
-      type: Date
+      type: Date,
     },
     client: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -90,7 +96,9 @@ export default {
       axios.get(`http://127.0.0.1:3000/line/${this.lineId}`)
         .then(() => {
           this.attended = new Date().getTime();
-          this.$emit('status', { status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId, attended: this.attended, client: true, lineId: this.lineId});
+          this.$emit('status', {
+            status: 'arrived', currentNumber: this.currentNumber, clientId: this.clientId, attended: this.attended, client: true, lineId: this.lineId,
+          });
           this.client = true;
         })
         .catch((error) => {

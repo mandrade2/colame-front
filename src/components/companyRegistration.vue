@@ -33,6 +33,34 @@
             class="mb-2 mr-sm-2 mb-sm-0"
           />
         </div>
+        <div class="inp">
+          <label
+            class="sr-only"
+            for="inline-form-input-description"
+          >
+            Username:
+          </label>
+          <b-input
+            id="inline-form-input-description"
+            v-model="company.username"
+            placeholder="descripcion"
+            class="mb-2 mr-sm-2 mb-sm-0"
+          />
+        </div>
+        <div class="inp">
+          <label
+            class="sr-only"
+            for="inline-form-input-description"
+          >
+            Password:
+          </label>
+          <b-input
+            id="inline-form-input-description"
+            v-model="company.plainpassword"
+            placeholder="descripcion"
+            class="mb-2 mr-sm-2 mb-sm-0"
+          />
+        </div>
         <b-button
           block
           type="submit"
@@ -73,7 +101,7 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       if (this.isNew) {
-        axios.post('http://127.0.0.1:3000/company', { name: this.company.name, description: this.company.description })
+        axios.post('http://127.0.0.1:3000/company', { name: this.company.name, description: this.company.description, plainpassword: this.company.plainpassword, username: this.company.username })
           .then(() => {
             this.$emit('done');
             this.company = {
@@ -87,7 +115,7 @@ export default {
             this.$emit('error', error);
           });
       } else {
-        axios.patch('http://127.0.0.1:3000/company', { name: this.company.name, description: this.company.description })
+        axios.patch(`http://127.0.0.1:3000/company/${this.company._id}`, { name: this.company.name, description: this.company.description, plainpassword: this.company.plainpassword, username: this.company.username })
           .then(() => {
             this.$emit('done');
           })

@@ -20,6 +20,20 @@
         />
       </div>
       <div class="main">
+        <b-input
+          id="inline-form-input-name"
+          v-model="attendant.username"
+          placeholder="Fila de espera"
+        />
+      </div>
+      <div class="main" v-if="isNew">
+        <b-input
+          id="inline-form-input-name"
+          v-model="attendant.plainpassword"
+          placeholder="Fila de espera"
+        />
+      </div>
+      <div class="main">
         <b-button
           v-if="!isNew"
           block
@@ -74,7 +88,7 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       if (this.isNew) {
-        axios.post(`http://127.0.0.1:3000/company/${this.companyId}/attendant`, { name: this.attendant.name })
+        axios.post(`http://127.0.0.1:3000/company/${this.companyId}/attendant`, { name: this.attendant.name, username: this.attendant.username, plainpassword: this.attendant.plainpassword })
           .then(() => {
             this.$emit('done');
             this.attendant = {
@@ -87,7 +101,7 @@ export default {
             this.$emit('error', error);
           });
       } else {
-        axios.patch(`http://127.0.0.1:3000/attendant/${this.attendant._id}`, { name: this.attendant.name })
+        axios.patch(`http://127.0.0.1:3000/attendant/${this.attendant._id}`, { name: this.attendant.name, username: this.attendant.username })
           .then(() => {
             this.$emit('done');
           })

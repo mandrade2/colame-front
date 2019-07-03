@@ -12,7 +12,14 @@
         <b-card-img :src="qrcode" />
       </div>
       <div>
-        <b-table striped hover :items="items" :fields="fields" :dark="true" :responsive="true" />
+        <b-table
+          striped
+          hover
+          :items="items"
+          :fields="fields"
+          :dark="true"
+          :responsive="true"
+        />
       </div>
       <div>
         <b-button
@@ -34,16 +41,53 @@
       >
         Editar
       </b-button>
-      <b-button v-b-toggle="line._id+'graphs'" variant="primary" block>Datos por dias</b-button>
-      <b-collapse :id="line._id+'graphs'" class="mt-2">
-        <div :id="line._id +'client'" style="height: 360px; width: 100%;"/>
-        <div :id="line._id +'avgTime'" style="height: 360px; width: 100%;"/>
-        <div :id="line._id +'maxtime'" style="height: 360px; width: 100%;"/>
-        <div :id="line._id +'mintime'" style="height: 360px; width: 100%;"/>
+      <b-button
+        v-b-toggle="line._id+'graphs'"
+        variant="primary"
+        block
+      >
+        Datos por dias
+      </b-button>
+      <b-collapse
+        :id="line._id+'graphs'"
+        class="mt-2"
+      >
+        <div
+          :id="line._id +'client'"
+          style="height: 360px; width: 100%;"
+        />
+        <div
+          :id="line._id +'avgTime'"
+          style="height: 360px; width: 100%;"
+        />
+        <div
+          :id="line._id +'maxtime'"
+          style="height: 360px; width: 100%;"
+        />
+        <div
+          :id="line._id +'mintime'"
+          style="height: 360px; width: 100%;"
+        />
       </b-collapse>
-      <b-button v-b-toggle="line._id+'att'" variant="primary" block>Datos por Atendedores</b-button>
-      <b-collapse :id="line._id+'att'" class="mt-2">
-        <b-table striped hover :items="itemsAtt" :fields="fields" :dark="true" :responsive="true" />
+      <b-button
+        v-b-toggle="line._id+'att'"
+        variant="primary"
+        block
+      >
+        Datos por Atendedores
+      </b-button>
+      <b-collapse
+        :id="line._id+'att'"
+        class="mt-2"
+      >
+        <b-table
+          striped
+          hover
+          :items="itemsAtt"
+          :fields="fields"
+          :dark="true"
+          :responsive="true"
+        />
       </b-collapse>
     </b-card>
     <b-card
@@ -55,8 +99,8 @@
       <div class="center">
         <LineCreator
           :line="line"
-          :isNew="false"
-          :companyId="'5cd6f9ce14f8aa4a7a2928ba'"
+          :is-new="false"
+          :company-id="'5cd6f9ce14f8aa4a7a2928ba'"
           @cancel="select()"
           @done="done()"
         />
@@ -101,7 +145,7 @@ export default {
       chartData: {
         animationEnabled: true,
         toolTip: {
-          shared: true
+          shared: true,
         },
         title: {
           text: '',
@@ -196,11 +240,11 @@ export default {
           const keys = ['clients', 'avgTime', 'maxtime', 'mintime'];
           for (let i = 0; i < this.charts.length; i++) {
             this.charts[i].title.text = keys[i];
-            let dataPoints = [];
-            for (let x in this.waitInfo.dataPerDate){
-              dataPoints.push({label: x, y: this.waitInfo.dataPerDate[x][keys[i]]})
+            const dataPoints = [];
+            for (const x in this.waitInfo.dataPerDate) {
+              dataPoints.push({ label: x, y: this.waitInfo.dataPerDate[x][keys[i]] });
             }
-            this.charts[i].data.push({ name:'Espera', type: 'column', dataPoints });
+            this.charts[i].data.push({ name: 'Espera', type: 'column', dataPoints });
           }
         })
         .catch((err) => {
@@ -220,7 +264,7 @@ export default {
             tiempo_máximo: this.attInfo.maxtime,
             tiempo_mínimo: this.attInfo.mintime,
           });
-          for (let i in this.attInfo.dataPerAttendant){
+          for (const i in this.attInfo.dataPerAttendant) {
             this.itemsAtt.push({
               type: i,
               clientes: this.attInfo.dataPerAttendant[i].clients,
@@ -233,11 +277,11 @@ export default {
           const keys = ['clients', 'avgTime', 'maxtime', 'mintime'];
           for (let i = 0; i < this.charts.length; i++) {
             this.charts[i].title.text = keys[i];
-            let dataPoints = [];
-            for (let x in this.attInfo.dataPerDate){
-              dataPoints.push({label: x, y: this.attInfo.dataPerDate[x][keys[i]]})
+            const dataPoints = [];
+            for (const x in this.attInfo.dataPerDate) {
+              dataPoints.push({ label: x, y: this.attInfo.dataPerDate[x][keys[i]] });
             }
-            this.charts[i].data.push({name:'Atendidos', type: 'column', dataPoints });
+            this.charts[i].data.push({ name: 'Atendidos', type: 'column', dataPoints });
           }
         })
         .catch((err) => {

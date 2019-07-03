@@ -50,38 +50,38 @@
       class="sure"
       title="Seguro?"
       centered
-      okVariant= 'danger'
-      okTitle= 'Salir!'
+      ok-variant="danger"
+      ok-title="Salir!"
       @ok="exitRow"
     >
       Seguro que quiere salirse de la fila?
     </b-modal>
     <div>
-    <div v-if=" !data.client.here">
-    <p>
-        No estoy aqui
-      </p>
+      <div v-if=" !data.client.here">
+        <p>
+          No estoy aqui
+        </p>
         <b-button
           class="here"
           variant="success"
           @click="imhere"
         >
-         Estoy
+          Estoy
         </b-button>
       </div>
       <div v-else>
-    <p>
-        Estoy aqui
-      </p>
+        <p>
+          Estoy aqui
+        </p>
         <b-button
           class="here"
           variant="warning"
           @click="imhere"
         >
-         Salir
+          Salir
         </b-button>
       </div>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -147,7 +147,7 @@ export default {
     imhere() {
       axios.patch(`http://127.0.0.1:3000/client/${this.data.client._id}`)
         .then(() => {
-          this.data.client.here = !this.data.client.here
+          this.data.client.here = !this.data.client.here;
         })
         .catch((error) => {
           this.error = error;
@@ -168,7 +168,7 @@ export default {
     checkExit() {
       if (this.position < 0 && !this.data.line.attending.includes(this.data.client._id)) {
         clearInterval(this.interval);
-        if (!this.sentTime){
+        if (!this.sentTime) {
           this.sendTime();
         }
         this.$router.replace('/');
@@ -178,9 +178,11 @@ export default {
       this.position = this.data.line.clients.indexOf(this.data.client._id);
     },
     sendTime() {
-      let newDate = new Date();
-      let seconds = (newDate.getTime() - startDate.getTime())/1000
-      let response = {date: new Date(), seconds: seconds, clientId: this.data.client._id, lineId: this.data.line._id, attendants: this.data.line.attendants}
+      const newDate = new Date();
+      const seconds = (newDate.getTime() - startDate.getTime()) / 1000;
+      const response = {
+        date: new Date(), seconds, clientId: this.data.client._id, lineId: this.data.line._id, attendants: this.data.line.attendants,
+      };
       axios.post('http://127.0.0.1:3000/waittime', response)
         .then((response) => {
           this.sentTime = true;
@@ -191,7 +193,7 @@ export default {
         });
     },
     checkTime() {
-      if (!this.sentTime && this.data.line.attending.includes(this.data.client._id)){
+      if (!this.sentTime && this.data.line.attending.includes(this.data.client._id)) {
         this.sendTime();
       }
     },

@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="main"
-  >
+  <div class="main">
     <div v-if="hasError">
       <b-alert
         variant="danger"
@@ -12,20 +10,12 @@
       </b-alert>
     </div>
     <h1 class="title">
-      Bienvenido!
+      Ingresa a una línea par atender
     </h1>
     <div>
-      <b-button
-        block
-        class="begin"
-        variant="light"
-        @click="begin("5d0e4e71a68a2c2d983cbb62")"
-      >
-        Partir!
-      </b-button>
     </div>
     <div
-      v-for="(line, index) in lines"
+      v-for="(line) in lines"
       :key="line._id"
     >
       <b-button
@@ -45,6 +35,14 @@ import axios from 'axios';
 
 export default {
   name: 'AssistantStart',
+  props: {
+    attendant: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   data() {
     return {
       error: '',
@@ -57,9 +55,17 @@ export default {
   },
   methods: {
     begin(lineId) {
-      axios.post(`http://127.0.0.1:3000/line/${lineId}/attendant`)
+      axios
+        .post(`http://127.0.0.1:3000/line/${lineId}/attendant`)
         .then(() => {
-          this.$emit('status', { status: 'waiting', currentNumber: null, clientId: null, client: false, attended: null, lineId: lineId });
+          this.$emit('status', {
+            status: 'waiting',
+            currentNumber: null,
+            clientId: null,
+            client: false,
+            attended: null,
+            lineId,
+          });
           this.hasError = false;
         })
         .catch((error) => {
@@ -68,7 +74,8 @@ export default {
         });
     },
     getLines() {
-      axios.get('http://127.0.0.1:3000/company/5cd6f9ce14f8aa4a7a2928ba/lines')
+      axios
+        .get(`http://127.0.0.1:3000/company/${this.attendant.companyId}/lines`) // TODO: desharcodear
         .then(async (lines) => {
           this.lines = lines.data;
         })
@@ -82,18 +89,17 @@ export default {
 </script>
 
 <style scoped>
-
-.main{
+.main {
   margin: 0 auto;
   padding-top: 25vh;
 }
-.title{
+.title {
   padding-top: 25 vh;
-    font-size: 400%;
+  font-size: 400%;
 }
 
-.begin{
-  width:70%;
-  margin:10vh auto;
+.begin {
+  width: 70%;
+  margin: 10vh auto;
 }
 </style>
