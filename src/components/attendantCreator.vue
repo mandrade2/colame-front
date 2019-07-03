@@ -16,21 +16,22 @@
         <b-input
           id="inline-form-input-name"
           v-model="attendant.name"
-          placeholder="Fila de espera"
+          placeholder="Nombre de Atendedor"
         />
       </div>
       <div class="main">
         <b-input
           id="inline-form-input-name"
           v-model="attendant.username"
-          placeholder="Fila de espera"
+          placeholder="Username"
         />
       </div>
       <div class="main" v-if="isNew">
         <b-input
           id="inline-form-input-name"
           v-model="attendant.plainpassword"
-          placeholder="Fila de espera"
+          placeholder="Password"
+          type="password"
         />
       </div>
       <div class="main">
