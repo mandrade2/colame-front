@@ -81,6 +81,13 @@
           Salir
         </b-button>
       </div>
+      <b-button
+        class="moveBack"
+        variant="warning"
+        @click="moveBack"
+      >
+        Salir
+      </b-button>
     </div>
   </div>
 </template>
@@ -211,7 +218,7 @@ export default {
       }
     },
     loadData() {
-      axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}/`)
+      axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}/position/${this.data.client_id}/${this.position}`)
         .then((response) => {
           this.data.line = response.data;
           this.hasError = false;
