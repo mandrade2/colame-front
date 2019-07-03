@@ -192,7 +192,7 @@ export default {
     },
     sendTime() {
       const newDate = new Date();
-      const seconds = (newDate.getTime() - startDate.getTime()) / 1000;
+      const seconds = (newDate.getTime() - this.startDate.getTime()) / 1000;
       const response = {
         date: new Date(), seconds, clientId: this.data.client._id, lineId: this.data.line._id, attendants: this.data.line.attendants,
       };

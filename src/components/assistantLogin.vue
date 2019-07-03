@@ -4,8 +4,8 @@
       <b-alert variant="danger" dismissible show>{{ error }}</b-alert>
     </div>
     <h1 class="title">Bienvenido!</h1>
-    <b-form-input v-model="username" />
-    <b-form-input v-model="password" type="password" />
+    <b-form-input class="inp-name" v-model="username" placeholder="Username" />
+    <b-form-input class="inp-name" v-model="password" type="password" placeholder="Contrasena" />
     <div>
       <b-button block class="begin" variant="light" @click="login(username,password)">Ingresar</b-button>
     </div>
@@ -64,7 +64,12 @@ export default {
 }
 
 .begin {
-  width: 70%;
+  width: 300px;
   margin: 10vh auto;
+}
+
+.inp-name {
+  width: 500px;
+  margin: 3vh auto;
 }
 </style>

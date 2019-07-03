@@ -76,6 +76,7 @@ export default {
     next() {
       axios.patch(`http://127.0.0.1:3000/line/${this.lineId}`, { clientId: this.clientId, client: this.client, time: new Date().getTime() - this.attended })
         .then((response) => {
+          this.sendTime();
           this.$emit('status', {
             status: 'waiting', currentNumber: response.data.number, clientId: response.data._id, time: null, client: false, lineId: this.lineId,
           });
@@ -90,9 +91,9 @@ export default {
     },
     sendTime() {
       const newDate = new Date();
-      const seconds = (newDate.getTime() - startDate.getTime()) / 1000;
+      const seconds = (newDate.getTime() - this.startDate.getTime()) / 1000;
       const response = {
-        date: new Date(), seconds, clientId: this.data.client._id, lineId: this.lineId, attendantId: this.attendant._id,
+        date: new Date(), seconds, clientId: this.client._id, lineId: this.lineId, attendantId: this.attendant._id,
       };
       axios.post('http://127.0.0.1:3000/atttime', response)
         .then((response) => {

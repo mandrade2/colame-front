@@ -23,9 +23,16 @@
       <b-button
         class="join"
         variant="light"
-        @click="joinRow"
+        href="#/assistant"
       >
-        Unirse a la fila!
+        Acceso Atendedor
+      </b-button>
+      <b-button
+        class="join"
+        variant="light"
+        href="#/company"
+      >
+        Acceso Empresa
       </b-button>
     </div>
   </div>
@@ -79,6 +86,10 @@ export default {
 
 <style scoped>
 
+.qr {
+  padding: 30px;
+}
+
 .d1 {
   height: 20vh;
 }
@@ -87,13 +98,13 @@ export default {
   font-size: 390%;
 }
 .join {
-  border-radius: 50%;
-  height: 35vh;
-  width: 35vh;
+  height: 10vh;
+  width: 30vh;
+  margin: 80px;
   font-weight: bold;
   font-size: 150%;
   color: #2e2e2e;
-  border-width: 3vh;
+  display: inline;
   border-color: orange;
 }
 .main {
