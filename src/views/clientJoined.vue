@@ -86,7 +86,7 @@
         variant="warning"
         @click="moveBack"
       >
-        Salir
+        Atrasar 10 minutos
       </b-button>
     </div>
   </div>
@@ -148,6 +148,15 @@ export default {
     clearInterval(this.interval);
   },
   methods: {
+    moveBack() {
+      axios.patch(`http://127.0.0.1:3000/line/${this.data.client.lineId}/${this.data.client._id}/moveBack`)
+      .then(() => {
+      })
+      .catch((error) => {
+        this.error = error;
+        this.hasError = true;
+      });
+    },
     loadDataInterval() {
       this.interval = setInterval(() => {
         this.loadData();
