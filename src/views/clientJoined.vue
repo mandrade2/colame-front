@@ -132,6 +132,8 @@ export default {
     };
   },
   mounted() {
+    console.log(this.data);
+    this.getLine();
     this.loadData();
     this.loadDataInterval();
   },
@@ -143,6 +145,17 @@ export default {
       this.interval = setInterval(() => {
         this.loadData();
       }, 10000);
+    },
+    getLine() {
+      axios.get(`http://127.0.0.1:3000/line/${this.data.client.lineId}`)
+        .then((response) => {
+          console.log(response);
+          this.data.line = response.data;
+        })
+        .catch((error) => {
+          this.error = error;
+          this.hasError = true;
+        });
     },
     imhere() {
       axios.patch(`http://127.0.0.1:3000/client/${this.data.client._id}`)
@@ -198,7 +211,7 @@ export default {
       }
     },
     loadData() {
-      axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}/position/${this.data.client._id}/${this.position}`)
+      axios.get(`http://127.0.0.1:3000/line/${this.data.line._id}/`)
         .then((response) => {
           this.data.line = response.data;
           this.hasError = false;

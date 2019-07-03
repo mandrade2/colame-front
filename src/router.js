@@ -21,6 +21,7 @@ export default new Router({
     path: '/row',
     name: 'line',
     component: ClientJoined,
+    props: true,
   },
   {
     path: '/assistant',
